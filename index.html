@@ -54,141 +54,137 @@
             // Snake game logic
             alert('Start Snake Game!');
             // You can add the snake game logic here
-            <script>
-    const snakeCanvas = document.getElementById('snakeCanvas');
-    const snakeContext = snakeCanvas.getContext('2d');
-    const snakeBox = 20;
-    const snake = [{ x: 10 * snakeBox, y: 10 * snakeBox }];
-    let snakeFood = { x: Math.floor(Math.random() * 20) * snakeBox, y: Math.floor(Math.random() * 20) * snakeBox };
-    let snakeScore = 0;
-    let snakeChangingDirection = false;
-    let snakeDX = snakeBox;
-    let snakeDY = 0;
-
-    document.addEventListener('keydown', snakeChangeDirection);
-
-    function snakeChangeDirection(event) {
-        if (snakeChangingDirection) return;
-        snakeChangingDirection = true;
-
-        const keyPressed = event.key;
-        const goingUp = snakeDY === -snakeBox && keyPressed === 'ArrowDown';
-        const goingDown = snakeDY === snakeBox && keyPressed === 'ArrowUp';
-        const goingLeft = snakeDX === -snakeBox && keyPressed === 'ArrowRight';
-        const goingRight = snakeDX === snakeBox && keyPressed === 'ArrowLeft';
-
-        if (!(goingUp || goingDown || goingLeft || goingRight)) {
-            if (keyPressed === 'ArrowUp') {
-                snakeDX = 0;
-                snakeDY = -snakeBox;
-            } else if (keyPressed === 'ArrowDown') {
-                snakeDX = 0;
-                snakeDY = snakeBox;
-            } else if (keyPressed === 'ArrowLeft') {
-                snakeDX = -snakeBox;
-                snakeDY = 0;
-            } else if (keyPressed === 'ArrowRight') {
-                snakeDX = snakeBox;
-                snakeDY = 0;
-            }
-        }
-    }
-
-    function snakeDraw() {
-        snakeContext.clearRect(0, 0, snakeCanvas.width, snakeCanvas.height);
-        snakeContext.fillStyle = '#ffffff';
-        snakeContext.font = '20px Arial';
-        snakeContext.fillText(`Score: ${snakeScore}`, snakeBox, snakeBox);
-        snakeContext.fillStyle = 'green';
-        snake.forEach(snakeDrawPart);
-        snakeContext.fillStyle = 'red';
-        snakeContext.fillRect(snakeFood.x, snakeFood.y, snakeBox, snakeBox);
-        snakeMove();
-        snakeCollision();
-        if (snake[0].x === snakeFood.x && snake[0].y === snakeFood.y) {
-            snakeScore++;
-            snakeFood = { x: Math.floor(Math.random() * 20) * snakeBox, y: Math.floor(Math.random() * 20) * snakeBox };
-        } else {
-            snake.pop();
-        }
-        snakeChangingDirection = false;
-    }
-
-    function snakeDrawPart(snakePart) {
-        snakeContext.fillRect(snakePart.x, snakePart.y, snakeBox, snakeBox);
-    }
-
-    function snakeMove() {
-        const snakeHead = { x: snake[0].x + snakeDX, y: snake[0].y + snakeDY };
-        snake.unshift(snakeHead);
-    }
-
-    function snakeCollision() {
-        if (
-            snake[0].x < 0 || snake[0].x >= snakeCanvas.width ||
-            snake[0].y < 0 || snake[0].y >= snakeCanvas.height ||
-            snake.slice(1).some(part => part.x === snake[0].x && part.y === snake[0].y)
-        ) {
-            clearInterval(snakeGame);
-            alert('Snake Game Over! Press OK to restart.');
-            location.reload();
-        }
-    }
-
-    const snakeGame = setInterval(snakeDraw, 100);
-</script>
-
         }
 
         function startDotGame() {
             // Dot-eating game logic
             alert('Start Dot-eating Game!');
             // You can add the dot-eating game logic here
+        }
+    </script>
     <script>
-    const dotCanvas = document.getElementById('dotCanvas');
-    const dotContext = dotCanvas.getContext('2d');
-    const dotBox = 20;
-    let dotX = dotCanvas.width / 2;
-    let dotY = dotCanvas.height / 2;
-    let dotDX = 5;
-    let dotDY = 5;
+        // Snake game logic
+        const snakeBox = 20;
+        const snake = [{ x: 10 * snakeBox, y: 10 * snakeBox }];
+        let snakeFood = { x: Math.floor(Math.random() * 20) * snakeBox, y: Math.floor(Math.random() * 20) * snakeBox };
+        let snakeScore = 0;
+        let snakeChangingDirection = false;
+        let snakeDX = snakeBox;
+        let snakeDY = 0;
 
-    function dotDraw() {
-        dotContext.clearRect(0, 0, dotCanvas.width, dotCanvas.height);
-        dotContext.fillStyle = 'yellow';
-        dotContext.beginPath();
-        dotContext.arc(dotX, dotY, dotBox / 2, 0, Math.PI * 2);
-        dotContext.fill();
-        dotMove();
-        dotCollision();
-    }
+        document.addEventListener('keydown', snakeChangeDirection);
 
-    function dotMove() {
-        dotX += dotDX;
-        dotY += dotDY;
-        if (dotX + dotBox / 2 > dotCanvas.width || dotX - dotBox / 2 < 0) {
-            dotDX = -dotDX;
+        function snakeChangeDirection(event) {
+            if (snakeChangingDirection) return;
+            snakeChangingDirection = true;
+
+            const keyPressed = event.key;
+            const goingUp = snakeDY === -snakeBox && keyPressed === 'ArrowDown';
+            const goingDown = snakeDY === snakeBox && keyPressed === 'ArrowUp';
+            const goingLeft = snakeDX === -snakeBox && keyPressed === 'ArrowRight';
+            const goingRight = snakeDX === snakeBox && keyPressed === 'ArrowLeft';
+
+            if (!(goingUp || goingDown || goingLeft || goingRight)) {
+                if (keyPressed === 'ArrowUp') {
+                    snakeDX = 0;
+                    snakeDY = -snakeBox;
+                } else if (keyPressed === 'ArrowDown') {
+                    snakeDX = 0;
+                    snakeDY = snakeBox;
+                } else if (keyPressed === 'ArrowLeft') {
+                    snakeDX = -snakeBox;
+                    snakeDY = 0;
+                } else if (keyPressed === 'ArrowRight') {
+                    snakeDX = snakeBox;
+                    snakeDY = 0;
+                }
+            }
         }
-        if (dotY + dotBox / 2 > dotCanvas.height || dotY - dotBox / 2 < 0) {
-            dotDY = -dotDY;
-        }
-    }
 
-    function dotCollision() {
-        if (
-            Math.abs(snake[0].x - dotX) < snakeBox / 2 + dotBox / 2 &&
-            Math.abs(snake[0].y - dotY) < snakeBox / 2 + dotBox / 2
-        ) {
-            clearInterval(dotGame);
-            alert('Dot-eating Game Over! Press OK to restart.');
-            location.reload();
+        function snakeDraw() {
+            snakeContext.clearRect(0, 0, snakeCanvas.width, snakeCanvas.height);
+            snakeContext.fillStyle = '#ffffff';
+            snakeContext.font = '20px Arial';
+            snakeContext.fillText(`Score: ${snakeScore}`, snakeBox, snakeBox);
+            snakeContext.fillStyle = 'green';
+            snake.forEach(snakeDrawPart);
+            snakeContext.fillStyle = 'red';
+            snakeContext.fillRect(snakeFood.x, snakeFood.y, snakeBox, snakeBox);
+            snakeMove();
+            snakeCollision();
+            if (snake[0].x === snakeFood.x && snake[0].y === snakeFood.y) {
+                snakeScore++;
+                snakeFood = { x: Math.floor(Math.random() * 20) * snakeBox, y: Math.floor(Math.random() * 20) * snakeBox };
+            } else {
+                snake.pop();
+            }
+            snakeChangingDirection = false;
         }
-    }
 
-    const dotGame = setInterval(dotDraw, 50);
-</script>
-
+        function snakeDrawPart(snakePart) {
+            snakeContext.fillRect(snakePart.x, snakePart.y, snakeBox, snakeBox);
         }
+
+        function snakeMove() {
+            const snakeHead = { x: snake[0].x + snakeDX, y: snake[0].y + snakeDY };
+            snake.unshift(snakeHead);
+        }
+
+        function snakeCollision() {
+            if (
+                snake[0].x < 0 || snake[0].x >= snakeCanvas.width ||
+                snake[0].y < 0 || snake[0].y >= snakeCanvas.height ||
+                snake.slice(1).some(part => part.x === snake[0].x && part.y === snake[0].y)
+            ) {
+                clearInterval(snakeGame);
+                alert('Snake Game Over! Press OK to restart.');
+                location.reload();
+            }
+        }
+
+        const snakeGame = setInterval(snakeDraw, 100);
+    </script>
+    <script>
+        // Dot-eating game logic
+        const dotBox = 20;
+        let dotX = dotCanvas.width / 2;
+        let dotY = dotCanvas.height / 2;
+        let dotDX = 5;
+        let dotDY = 5;
+
+        function dotDraw() {
+            dotContext.clearRect(0, 0, dotCanvas.width, dotCanvas.height);
+            dotContext.fillStyle = 'yellow';
+            dotContext.beginPath();
+            dotContext.arc(dotX, dotY, dotBox / 2, 0, Math.PI * 2);
+            dotContext.fill();
+            dotMove();
+            dotCollision();
+        }
+
+        function dotMove() {
+            dotX += dotDX;
+            dotY += dotDY;
+            if (dotX + dotBox / 2 > dotCanvas.width || dotX - dotBox / 2 < 0) {
+                dotDX = -dotDX;
+            }
+            if (dotY + dotBox / 2 > dotCanvas.height || dotY - dotBox / 2 < 0) {
+                dotDY = -dotDY;
+            }
+        }
+
+        function dotCollision() {
+            if (
+                Math.abs(snake[0].x - dotX) < snakeBox / 2 + dotBox / 2 &&
+                Math.abs(snake[0].y - dotY) < snakeBox / 2 + dotBox / 2
+            ) {
+                clearInterval(dotGame);
+                alert('Dot-eating Game Over! Press OK to restart.');
+                location.reload();
+            }
+        }
+
+        const dotGame = setInterval(dotDraw, 50);
     </script>
 </body>
 </html>

@@ -47,16 +47,26 @@
         const dotCanvas = document.getElementById('dotCanvas');
         const dotContext = dotCanvas.getContext('2d');
 
+        let snakeGameInterval;
+        let dotGameInterval;
+
         snakeCanvas.addEventListener('click', startSnakeGame);
         dotCanvas.addEventListener('click', startDotGame);
 
         function startSnakeGame() {
-            // Clear canvas before starting the game
-            snakeContext.clearRect(0, 0, snakeCanvas.width, snakeCanvas.height);
+            clearInterval(dotGameInterval);
+            snakeGameInterval = setInterval(snakeGameLogic, 100);
+        }
 
+        function startDotGame() {
+            clearInterval(snakeGameInterval);
+            dotGameInterval = setInterval(dotGameLogic, 50);
+        }
+
+        function snakeGameLogic() {
             // Snake game logic
             const snakeBox = 20;
-            const snake = [{ x: 10 * snakeBox, y: 10 * snakeBox }];
+            let snake = [{ x: 10 * snakeBox, y: 10 * snakeBox }];
             let snakeFood = { x: Math.floor(Math.random() * 20) * snakeBox, y: Math.floor(Math.random() * 20) * snakeBox };
             let snakeScore = 0;
             let snakeChangingDirection = false;
@@ -127,19 +137,16 @@
                     snake[0].y < 0 || snake[0].y >= snakeCanvas.height ||
                     snake.slice(1).some(part => part.x === snake[0].x && part.y === snake[0].y)
                 ) {
-                    clearInterval(snakeGame);
+                    clearInterval(snakeGameInterval);
                     alert('Snake Game Over! Press OK to restart.');
                     location.reload();
                 }
             }
 
-            const snakeGame = setInterval(snakeDraw, 100);
+            snakeDraw();
         }
 
-        function startDotGame() {
-            // Clear canvas before starting the game
-            dotContext.clearRect(0, 0, dotCanvas.width, dotCanvas.height);
-
+        function dotGameLogic() {
             // Dot-eating game logic
             const dotBox = 20;
             let dotX = dotCanvas.width / 2;
@@ -173,13 +180,13 @@
                     Math.abs(snake[0].x - dotX) < snakeBox / 2 + dotBox / 2 &&
                     Math.abs(snake[0].y - dotY) < snakeBox / 2 + dotBox / 2
                 ) {
-                    clearInterval(dotGame);
+                    clearInterval(dotGameInterval);
                     alert('Dot-eating Game Over! Press OK to restart.');
                     location.reload();
                 }
             }
 
-            const dotGame = setInterval(dotDraw, 50);
+            dotDraw();
         }
     </script>
 </body>

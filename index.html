@@ -21,6 +21,7 @@
         canvas {
             border: 1px solid #ffffff;
             margin: 10px;
+            cursor: pointer;
         }
         h1 {
             color: #ffffff;
@@ -40,9 +41,19 @@
         </div>
     </div>
     <script>
-        // 贪吃蛇游戏逻辑
-        // 请在这里添加您的贪吃蛇游戏逻辑
-        <script>
+        const snakeCanvas = document.getElementById('snakeCanvas');
+        const snakeContext = snakeCanvas.getContext('2d');
+
+        const dotCanvas = document.getElementById('dotCanvas');
+        const dotContext = dotCanvas.getContext('2d');
+
+        snakeCanvas.addEventListener('click', startSnakeGame);
+        dotCanvas.addEventListener('click', startDotGame);
+
+        function startSnakeGame() {
+            // Snake game logic
+            // Add the snake game logic here
+            <script>
     const snakeCanvas = document.getElementById('snakeCanvas');
     const snakeContext = snakeCanvas.getContext('2d');
     const snakeBox = 20;
@@ -126,11 +137,12 @@
     const snakeGame = setInterval(snakeDraw, 100);
 </script>
 
-    </script>
+        }
+
+        function startDotGame() {
+            // Dot-eating game logic
+            // Add the dot-eating game logic here
     <script>
-        // 吃豆豆游戏逻辑
-        // 请在这里添加您的吃豆豆游戏逻辑
-        <script>
     const dotCanvas = document.getElementById('dotCanvas');
     const dotContext = dotCanvas.getContext('2d');
     const dotBox = 20;
@@ -174,6 +186,7 @@
     const dotGame = setInterval(dotDraw, 50);
 </script>
 
+        }
     </script>
 </body>
 </html>
